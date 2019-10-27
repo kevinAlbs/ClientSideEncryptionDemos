@@ -1,26 +1,7 @@
-import base64
-import os
-
-from pymongo import MongoClient
-from pymongo.errors import DuplicateKeyError
-from pymongo.encryption import ClientEncryption
-from pymongo.encryption_options import AutoEncryptionOpts
-from bson import binary, ObjectId
-from bson.codec_options import CodecOptions
-
-# Setup.
-codec_opts = CodecOptions(uuid_representation=binary.STANDARD)
-
-if "LOCAL_MASTERKEY_BASE64" not in os.environ or not os.path.exists(
-        "key_uuid.txt"):
-    raise Exception("Prerequisites not met. Run setup.py")
-
-local_key = os.environ["LOCAL_MASTERKEY_BASE64"]
-key_uuid = binary.Binary(base64.b64decode(
-    open("key_uuid.txt", "r").read()), binary.UUID_SUBTYPE)
+from mongo_setup import *
 
 # Configure automatic encryption and ClientEncryption object.
-kms_providers = {"local": {"key": binary.Binary(base64.b64decode(local_key))}}
+kms_providers = {"local": {"key": masterkey}}
 schema_map = {
     "db.users": {
         "bsonType": "object",
@@ -129,5 +110,5 @@ def delete_all_data (user_id):
     associated encryption key for this user.
     """
     client.db.posts.delete_many ({"user_id": user_id})
-    client.db.users.delete_one ({"  _id": user_id})
+    client.db.users.delete_one ({"_id": user_id})
     key_vault_client.db.keyvault.delete_one ({"keyAltNames": user_id})

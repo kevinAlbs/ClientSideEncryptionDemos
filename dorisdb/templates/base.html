@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <title>MongoDiary - Using DorisDB™</title>
+    <style type="text/css">
+        h1 {
+            font-size: 48pt;
+            border-bottom: 8px black solid;
+        }
+        h2 {
+            font-size: 32pt;
+        }
+        h3 {
+            font-size: 24pt;
+        }
+        article {
+            border-top: 8px black solid;
+        }
+        p, span {
+            font-size: 24pt;
+        }
+        input, textarea {
+            font-size: 24pt;
+            font-family: serif;
+            border: 8px black solid;
+            border-radius: 8px;
+            padding: .25em;
+        }
+        input[type=submit] {
+            font-size: 24pt;
+        }
+        .row {
+            padding: .5em;
+        }
+        #main {
+            width: 80%;
+            margin: 0 auto;
+        }
+        #flex {
+            display: flex;  
+        }
+        #left {
+            flex: 1;
+        }
+        #right {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <h1>MongoDiary</h1>
+    {% block header %}{% endblock %}
+    <div id="flex">
+    <div id="left">{% block content %}{% endblock %}</div>
+    <div id="right">{% block rightcontent %}{% endblock %}</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,8 @@
+{% extends "base.html" %}
+{% block header %}
 <p>Logged in as {{ session["email"] }}. <a href="/logout">Logout?</a> <a href="/delete_all_data">Delete all data?</a></p>
-
+{% endblock %}
+{% block content %}
 <h2>Create a post</h2>
 <form action="/create_post" method="post">
     <div class="row">
@@ -12,7 +15,9 @@
         <input type="submit" value="Post" name="submit"/>
     </div>
 </form>
+{% endblock %}
 
+{% block rightcontent %}
 {% if posts | length > 0 %}
 <h2>Your posts</h2>
 {% for post in posts %}
@@ -22,3 +27,4 @@
 </article>
 {% endfor %}
 {% endif %}
+{% endblock %}
