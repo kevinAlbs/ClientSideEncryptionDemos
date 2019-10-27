@@ -3,8 +3,9 @@ Download mongocryptd, which is included with the MongoDB enterprise download. Ru
 
 Install Python dependencies.
 ```
-python -m pip install pymongo
-python -m pip install "pymongo[encryption]"
+pip install pymongo
+pip install "pymongo[encryption]"
+pip install Flask
 ```
 
 Set a local masterkey in the environment for testing.
@@ -16,4 +17,33 @@ export LOCAL_MASTERKEY_BASE64="base64 encoded 96 byte value"
 
 ```
 export LOCAL_MASTERKEY_BASE64="$(openssl rand -base64 96 | tr -d '\n')"
+```
+
+Use Python 3 to run demos.
+
+Example output of scripts in `/demo`.
+```
+> cd demo
+> python 01-setup.py
+Created data key in demo.keyvault with UUID: e67ffcb003f84076b0031ed809c2b712
+Proceed to 02-roundtrip.py
+> python 02-roundtrip.py
+Inserted into db.coll: {'_id': ObjectId('5db5d47b3cd5f3667fb83811'), 'name': 'Doris', 'ssn': '457-55-5462'}
+Proceed to 03-explicit.py
+> python 03-explicit.py
+encrypted data: AeZ//LAD+EB2sAMe2AnCtxICu6XJXY2XmAfvUZkeNcDHBgOGizxVCMREhcshCnlIt+miL+oE6Yr+jCWa4194jCn9J68FfgbpIqHg8PQFGZW1PGE61o6KvmXuP7PyRPSLSZI=
+decrypted back to: 123-45-6789
+```
+
+To run the demo webapp, set the hostname "dorisdb" to point to a host running mongod on port 27017. To refer to a local mongod, add the following to `/etc/hosts`
+```
+127.0.0.1 dorisdb
+```
+
+Then run:
+```
+cd dorisdb
+python setup.py
+FLASK_APP=./server.py flask run
+# Open localhost:5000 in web browser.
 ```
