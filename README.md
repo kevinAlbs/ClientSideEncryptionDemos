@@ -1,3 +1,8 @@
+# Client-Side Encryption Demos #
+This repository includes demonstrations to accompany the talk "Using Client-Side Encryption in MongoDB 4.2".
+
+For more information about Client-Side Encryption, refer to the [MongoDB Manual](https://docs.mongodb.com/manual/core/security-client-side-encryption/).
+
 ## Setup ##
 Download mongocryptd, which is included with the MongoDB enterprise download. Run it with `./mongocryptd`.
 
