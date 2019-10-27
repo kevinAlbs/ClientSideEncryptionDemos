@@ -1,0 +1,24 @@
+<p>Logged in as {{ session["email"] }}. <a href="/logout">Logout?</a> <a href="/delete_all_data">Delete all data?</a></p>
+
+<h2>Create a post</h2>
+<form action="/create_post" method="post">
+    <div class="row">
+        <input type="text" name="title" placeholder="Title" />
+    </div>
+    <div class="row">
+        <textarea name="body" placeholder="Body"></textarea>
+    </div>
+    <div class="row">
+        <input type="submit" value="Post" name="submit"/>
+    </div>
+</form>
+
+{% if posts | length > 0 %}
+<h2>Your posts</h2>
+{% for post in posts %}
+<article>
+<h3>{{ post["title"] }}</h3>
+<p>{{ post["body"] }}</p>
+</article>
+{% endfor %}
+{% endif %}

@@ -1,0 +1,24 @@
+{% if status_message %}
+<p>{{status_message}}</p>
+{% endif %}
+
+{% if logged_in %}
+<p>Hello {{ session["email"] }}. Go to <a href="/">home</a>?</p>
+{% else %}
+
+{% if login_failed %}
+<p>Failed to log in.</p>
+{% endif %}
+<form action="/login" method="post">
+    <div class="row">
+        <input type="text" name="email" placeholder="Email" />
+    </div>
+    <div class="row">
+        <input type="password" name="pwd" placeholder="Password" />
+    </div>
+    <div class="row">
+        <input type="submit" value="Login" name="submit"/> or
+        <input type="submit" value="Register" name="submit"/>
+    </div>
+</form>
+{% endif %}

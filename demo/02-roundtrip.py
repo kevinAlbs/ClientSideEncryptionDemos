@@ -6,14 +6,12 @@ from pymongo import MongoClient
 from pymongo.encryption import ClientEncryption
 from pymongo.encryption_options import AutoEncryptionOpts
 from bson import binary
-from bson.codec_options import CodecOptions
 
-codec_opts = CodecOptions(uuid_representation=binary.STANDARD)
 
-if "LOCAL_DATAKEY_BASE64" not in os.environ or not os.path.exists("key_uuid.txt"):
+if "LOCAL_MASTERKEY_BASE64" not in os.environ or not os.path.exists("key_uuid.txt"):
     raise Exception("Prerequisites not met. Run 01-setup.py")
 
-local_key = os.environ["LOCAL_DATAKEY_BASE64"]
+local_key = os.environ["LOCAL_MASTERKEY_BASE64"]
 kms_providers = {"local": {"key": binary.Binary(base64.b64decode(local_key))}}
 key_uuid = binary.Binary(base64.b64decode(open("key_uuid.txt", "r").read()), binary.UUID_SUBTYPE)
 schema_map = {
